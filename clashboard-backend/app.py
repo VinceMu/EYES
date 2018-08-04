@@ -6,7 +6,6 @@ from flask_cors import CORS
 
 import ssl
 import json
-from pprint import pprint
 
 
 uri = "mongodb+srv://user:123@unihack-dt2qp.mongodb.net/test?authMechanism=SCRAM-SHA-1"
@@ -17,20 +16,22 @@ mydb = client["UNIHACK"]
 mycol = mydb["eye-data"]
 
 
-
 CORS(app)
+
 
 @app.route('/getData', methods=['GET'])
 def getFromMongo():
+    str = request.args.get('website')
     mydb = client["UNIHACK"]
     mycol = mydb["eye-data"]
     if request.method == 'GET':
-        myquery = {"website": "www.firsttest.com"}
+        print(str)
+        myquery = {"website": str}
         mydoc = mycol.find_one(myquery)
         return dumps(mydoc)
 
 
-@app.route("/postData",methods=["POST"])
+@app.route("/postData", methods=["POST"])
 def insertToMongo():
     json_data = request.get_data()
     d_list = json.loads(json_data)
