@@ -151,9 +151,12 @@ function appendData() {
 
 function postData() {
 	var url = 'http://127.0.0.1:5000/postData'
+	var postMsg = new Object();
+	postMsg.data = eyeData;
+	postMsg.url = window.location.origin;
 	fetch(url, {
 		method: 'POST',
-		body: eyeData,
+		body: JSON.stringify(postMsg),
 	});
 
 

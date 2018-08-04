@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<iframe src="http://www.asos.com/au/" style="top:25%; left:25%; position: absolute; height: 50%; width: 50%; border: none" >
+</iframe>
+<div class="wrapper">
+<div class="heatmap" style="top:170px; left:24.5%; position: absolute; height: 55%; width: 55%; border: none">
+    <!-- <canvas class="heatmap-canvas" width="720" height="400" style="position: absolute; left: 0px; top: 0px;"> -->
+</div>
+</div>
+<script type=text/javascript src="{{
+  url_for('static', filename='heatmap_creator.js') }}"></script>
+  <script type=text/javascript src="{{
+    url_for('static', filename='heatmap.js') }}"></script>
+</body>
+</html>
