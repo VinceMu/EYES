@@ -1,6 +1,5 @@
 from pymongo import MongoClient
-from flask import request, jsonify
-from flask import Flask
+from flask import request, jsonify,Flask, send_from_directory,render_template
 from bson.json_util import dumps
 from flask_cors import CORS
 
@@ -15,8 +14,11 @@ app = Flask(__name__)
 mydb = client["UNIHACK"]
 mycol = mydb["eye-data"]
 
-
 CORS(app)
+
+@app.route("/")
+def dashboard():
+    return render_template("index.html")
 
 
 @app.route('/getData', methods=['GET'])

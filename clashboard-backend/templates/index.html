@@ -12,7 +12,9 @@
     <!-- <canvas class="heatmap-canvas" width="720" height="400" style="position: absolute; left: 0px; top: 0px;"> -->
 </div>    
 </div>
-<script src="./heatmap_creator.js"></script>
-
+<script type=text/javascript src="{{
+  url_for('static', filename='heatmap_creator.js') }}"></script>
+  <script type=text/javascript src="{{
+    url_for('static', filename='heatmap.js') }}"></script>
 </body>
 </html>

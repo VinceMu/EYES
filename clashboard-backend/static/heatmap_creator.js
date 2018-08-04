@@ -1,4 +1,3 @@
-var h337 = require('heatmap.js');
 var heatmap_instance = null;
 var elementId = ".heatmap" 
 
@@ -7,7 +6,11 @@ console.log("run");
 
 function run(){
     initialise()
-    fetch("http://127.0.0.1:5000/getData").then(function(r){ r.json().then(function(j){updateHeatMap(j)})})
+    var url = new URL("http://127.0.0.1:5000/getData")
+    websiteParam = window.location.search.substr(1)
+    params = {website:websiteParam}
+    url.search = new URLSearchParams(params)
+    fetch(url).then(function(r){ r.json().then(function(j){updateHeatMap(j)})})
 }
 
 function initialise(){
