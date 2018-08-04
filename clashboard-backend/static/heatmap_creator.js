@@ -29,10 +29,10 @@ function getParameterByName(name, url) {
 function initialise(){
     heatmap_instance = h337.create({
         container: document.querySelector(elementId),
-        maxOpacity: .6,
+        maxOpacity: 0.6,
         radius: 50,
         blur: .90,
-        backgroundColor: 'rgba(0, 0, 0, 0.96)'
+        backgroundColor: 'rgba(0, 0, 0, 0)'
     })
 }
 
