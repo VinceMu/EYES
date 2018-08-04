@@ -1,0 +1,25 @@
+{
+  "name": "unihack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "WebGazer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VinceMu/EYES.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VinceMu/EYES/issues"
+  },
+  "homepage": "https://github.com/VinceMu/EYES#readme",
+  "devDependencies": {
+    "parcel": "^1.9.7"
+  },
+  "dependencies": {
+    "heatmap.js": "^2.0.5"
+  }
+}
