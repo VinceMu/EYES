@@ -132,6 +132,8 @@ function appendData() {
 	runs++;
 	if(runs >30) {
 		stopAppending();
+		postData();
+		eyeData = [];
 	}
 	var prediction = webgazer.getCurrentPrediction();
 	if(prediction) {
@@ -139,7 +141,6 @@ function appendData() {
 			'x':prediction.x, 
 			'y':prediction.y, 
 			'timestamp':new Date(),
-			'url':window.location.href,
 			'windowWidth':window.innerWidth,
 			'windowHeight':window.innerHeight,
 		};
@@ -147,3 +148,20 @@ function appendData() {
 		eyeData.push(point);
 	}
 }
+
+function postData() {
+	var url = '127.0.0.1:4300/getData'
+	fetch(url, {
+		method: 'post',
+		body: eyeData,
+	});
+
+
+
+}
+
+
+
+
+
+
