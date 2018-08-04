@@ -2,32 +2,38 @@ var h337 = require('heatmap.js');
 var heatmap_instance = null;
 var elementId = ".heatmap" 
 
-document.onload = run()
-console.log("run")
+window.onload = run
+console.log("run");
+
 function run(){
     initialise()
-    fetch("http://127.0.0.1:5000/getData").then(r => r.json()).then(updateHeatMap(r))
+    fetch("http://127.0.0.1:5000/getData").then(function(r){ r.json().then(function(j){updateHeatMap(j)})})
 }
 
 function initialise(){
     heatmap_instance = h337.create({
-        container: document.getElementById(elementId),
+        container: document.querySelector(elementId),
         maxOpacity: .6,
         radius: 50,
         blur: .90,
-        backgroundColor: 'rgba(0, 0, 58, 0.96)'
+        backgroundColor: 'rgba(0, 0, 0, 0.96)'
     })
 }
+
+
 function updateHeatMap(eyeJson){
+  console.log(eyeJson)
   var eyeData = eyeJson["data"]
-  for(var i = 0;i<eyeData;i++){
+  for(var i = 0;i< eyeData.length;i++){
       var x_coord= eyeData[i]['x']
       var y_coord = eyeData[i]['y']
-      var weight = 1
+      var weight = 3
+      console.log("adding data")
       heatmap_instance.addData({
           x : x_coord,
           y : y_coord,
           value: weight
       })
   }
+
 }
