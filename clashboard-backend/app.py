@@ -2,6 +2,7 @@ from pymongo import MongoClient
 from flask import request, jsonify
 from flask import Flask
 from bson.json_util import dumps
+from flask_cors import CORS
 
 import ssl
 
@@ -9,9 +10,9 @@ uri = "mongodb+srv://user:123@unihack-dt2qp.mongodb.net/test?authMechanism=SCRAM
 client = MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
 
 app = Flask(__name__)
+CORS(app)
 
-
-@app.route('/getData', methods=['GET', 'POST'])
+@app.route('/getData', methods=['GET'])
 def user():
     mydb = client["UNIHACK"]
     mycol = mydb["eye-data"]
@@ -19,6 +20,7 @@ def user():
         myquery = {"website": "www.firsttest.com"}
         mydoc = mycol.find_one(myquery)
         return dumps(mydoc)
+
 
 @app.route("/postData",methods=["POST"])
 def insertToMongo():
