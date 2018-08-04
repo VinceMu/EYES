@@ -17,11 +17,11 @@ mydoc = mycol.find(myquery)
 for x in mydoc:
     print(x)
 
-def repeatloop():
 
+def loop():
     # class threading.Timer(interval, function, args=None, kwargs=None)
-    threading.Timer(5.0, repeatloop).start()
+    threading.Timer(5.0, loop).start()
     print(os.environ["TIMERINTERVAL"])
 
 
-repeatloop()
+loop()
