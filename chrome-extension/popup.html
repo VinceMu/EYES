@@ -2,30 +2,16 @@
   <html>
     <head>
       <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-        .roundCorners {
-          border-radius: 15px;
-          border: solid black 2px;
-          width:250px;
-          height:300px;
-        }
-        .innerItem {
-          padding-left:5px;
-          padding-top:5px;
-          position:relative;
-          left:5px;
-        }
-
       </style>
+      <script src="popup.js"></script>
     </head>
     <body>
-      <div class="roundCorners" style="roundCorners"> 
-        <button class="innerItem" id="changeColor">Change Colour</button>
+      <div style="width:250px;height:300px;">
+        <input id="toggleOn" type="checkbox" >ON/OFF</input>
+        <input id="toggleCamera" type="checkbox" >Camera </input>
+        <p>Points</p>
+        <a href="">My Account</a>
+        <button >Change Settings</button>
       </div>
-      <script src="popup.js"></script>
     </body>
   </html>
