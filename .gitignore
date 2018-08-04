@@ -1,2 +1,2 @@
-chrome-extension/node_modules
-chrome-extension/package-lock.json
+extension-backend/node_modules
+extension-backend/package-lock.json
