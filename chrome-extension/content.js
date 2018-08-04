@@ -156,7 +156,7 @@ function postData() {
 	postMsg.url = window.location.origin;
 	fetch(url, {
 		method: 'POST',
-		body: eyeData,
+		body: postMsg,
 	});
 
 
