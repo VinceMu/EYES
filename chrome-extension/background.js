@@ -12,7 +12,7 @@
       chrome.declarativeContent.onPageChanged.addRules([{
         conditions: [new chrome.declarativeContent.PageStateMatcher({
         	//add condition where the page is on our database
-          pageUrl: {hostEquals: 'developer.chrome.com'},
+          pageUrl: {hostEquals: '<all_urls>'},
         })
         ],
             actions: [new chrome.declarativeContent.ShowPageAction()]
