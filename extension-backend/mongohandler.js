@@ -21,11 +21,11 @@ function insert(data){
     });
 }
 
-var obj = {"website":"www.firsttest.com","data":[{"x":100,"y":200},
-                                                {"x":100,"y":205},
-                                                {"x":100,"y":210},
-                                                {"x":105,"y":215},
-                                                {"x":110,"y":220},
-                                                {"x":115,"y":225}]};
-insert(obj)
+// var obj = {"website":"www.firsttest.com","data":[{"x":100,"y":200},
+//                                                 {"x":100,"y":205},
+//                                                 {"x":100,"y":210},
+//                                                 {"x":105,"y":215},
+//                                                 {"x":110,"y":220},
+//                                                 {"x":115,"y":225}]};
+// insert(obj)
 

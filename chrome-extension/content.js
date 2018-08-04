@@ -150,9 +150,9 @@ function appendData() {
 }
 
 function postData() {
-	var url = '127.0.0.1:4300/getData'
+	var url = 'http://127.0.0.1:5000/postData'
 	fetch(url, {
-		method: 'post',
+		method: 'POST',
 		body: eyeData,
 	});
 

@@ -2,11 +2,11 @@ var h337 = require('heatmap.js');
 var heatmap_instance = null;
 var elementId = ".heatmap" 
 
-window.onload = run()
-
+document.onload = run()
+console.log("run")
 function run(){
     initialise()
-    fetch("localhost:3000/getData").then(r => r.json()).then(updateHeatMap(r))
+    fetch("http://127.0.0.1:5000/getData").then(r => r.json()).then(updateHeatMap(r))
 }
 
 function initialise(){

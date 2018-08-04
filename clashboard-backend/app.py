@@ -20,11 +20,10 @@ def user():
         mydoc = mycol.find_one(myquery)
         return dumps(mydoc)
 
-        # if data.get('name', None) is not None and data.get('email', None) is not None:
-        #     pymongo.db.users.insert_one(data)
-        #     return jsonify({'ok': True, 'message': 'User created successfully!'}), 200
-        # else:
-        #     return jsonify({'ok': False, 'message': 'Bad request parameters!'}), 400
+@app.route("/postData",methods=["POST"])
+def insertToMongo():
+    print("recieved post")
+    return "OK"
 
 
 if __name__ == '__main__':

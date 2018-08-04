@@ -829,16 +829,21 @@ return heatmapFactory;
 
 
 });
-},{}],"test.js":[function(require,module,exports) {
-console.log('test');
-console.log('i updated');
 },{}],"heatmap_creator.js":[function(require,module,exports) {
 var h337 = require('heatmap.js');
 var heatmap_instance = null;
+var elementId = ".heatmap";
 
-console.log(h337);
+document.onload = run();
+console.log("run");
+function run() {
+    initialise();
+    fetch("http://127.0.0.1:5000/getData").then(function (r) {
+        return r.json();
+    }).then(updateHeatMap(r));
+}
 
-function initialise(elementId) {
+function initialise() {
     heatmap_instance = h337.create({
         container: document.getElementById(elementId),
         maxOpacity: .6,
@@ -847,11 +852,20 @@ function initialise(elementId) {
         backgroundColor: 'rgba(0, 0, 58, 0.96)'
     });
 }
-
-console.log('hello world');
-
-require('./test');
-},{"heatmap.js":"../node_modules/heatmap.js/build/heatmap.js","./test":"test.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function updateHeatMap(eyeJson) {
+    var eyeData = eyeJson["data"];
+    for (var i = 0; i < eyeData; i++) {
+        var x_coord = eyeData[i]['x'];
+        var y_coord = eyeData[i]['y'];
+        var weight = 1;
+        heatmap_instance.addData({
+            x: x_coord,
+            y: y_coord,
+            value: weight
+        });
+    }
+}
+},{"heatmap.js":"../node_modules/heatmap.js/build/heatmap.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -880,7 +894,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54956' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '52738' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
