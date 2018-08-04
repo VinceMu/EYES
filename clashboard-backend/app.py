@@ -13,12 +13,12 @@ client = MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
 app = Flask(__name__)
 mydb = client["UNIHACK"]
 mycol = mydb["eye-data"]
-
 CORS(app)
 
 @app.route("/")
 def dashboard():
-    return render_template("index.html")
+    website_str = request.args.get('site')
+    return render_template("index.html",underlay= website_str)
 
 
 @app.route('/getData', methods=['GET'])
@@ -37,15 +37,11 @@ def getFromMongo():
 def insertToMongo():
     json_data = request.get_data()
     d_list = json.loads(json_data)
-
     insert = {
         "website": d_list['url'],
         "data": d_list['data'],
     }
-
     mycol.insert_one(insert)
-
-    print("recieved post")
     return "OK"
 
 
