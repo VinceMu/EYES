@@ -39,10 +39,9 @@ def insertToMongo():
     d_list = json.loads(json_data)
 
     insert = {
-        "website": d_list['website'],
+        "website": d_list['url'],
         "data": d_list['data'],
     }
-    print(insert)
 
     mycol.insert_one(insert)
 
