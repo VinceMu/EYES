@@ -12,57 +12,74 @@ setTimeout(function (){
 },50);
 
 function initGazer() {
-	console.log(webgazer);
 	var compatible = webgazer.detectCompatibility();
-	console.log(compatible?'compatible':'not compatible');
-	if (compatible) {
-		/*webgazer.begin();
-		console.log(videoElement);
-		var video = document.getElementById('')
-		videoElement.style.display="block";
-		document.body.appendChild(videoElement);
-		//webgazer.showPreditionPoints();
-		seteInterval(appendData,100);
-		//setInterval(sendData,2000)
-		*/
-	//start the webgazer tracker
-    	webgazer.setRegression('ridge') /* currently must set regression and tracker */
-	        .setTracker('clmtrackr')
-	        .setGazeListener(function(data, clock) {
-	          //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-	          //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-	        })
-	        .begin()
-	        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+	chrome.storage.sync.get('state', function(result) {
+		console.log(result.state);
+        var on = (result.state=='on');
+        console.log(on);
+		if (compatible&&on) {
+			//start the webgazer tracker
+	    	webgazer.setRegression('ridge') /* currently must set regression and tracker */
+		        .setTracker('clmtrackr')
+		        .setGazeListener(function(data, clock) {
+		          //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+		          //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+		        })
+		        .begin()
+		        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+	        function checkIfReady() {
+		        if (webgazer.isReady()) {
+		        	console.log('ready');
 
+					chrome.runtime.onMessage.addListener(
+					function(request, sender, sendResponse) {
+						console.log(sender.tab ?
+						  "from a content script:" + sender.tab.url :
+						  "from the extension");
+						if (request.toggleCamera == false) {
+							sendResponse({toggleCamera: false});
+							console.log('off');
+							document.getElementById('overlay').style.visibility='hidden';
+							document.getElementById('faceOverlay').hidden=false;
+							document.getElementById('webgazerVideoFeed').style.display='none';
+						} else if (request.toggleCamera == true) {
+							console.log('on');
+							sendResponse({toggleCamera: true});
+							document.getElementById('faceOverlay').style.visibility='visible';
+							document.getElementById('webgazerVideoFeed').style.display='block';
+							document.getElementById('overlay').hidden=true;
+							setup();
+						}
 
+						if(request.state) {
 
-        function checkIfReady() {
-	        if (webgazer.isReady()) {
-	        	console.log('ready');
-	            setup();
-	        } else {
-	            setTimeout(checkIfReady, 100);
-	        }
-	    }
-	    setTimeout(checkIfReady,100);
-	}
+						} else if (!request.state){
+							//stopAppending();
+						}
+					});
 
-
-
-
+		            setup();
+		        } else {
+		            setTimeout(checkIfReady, 100);
+		        }
+		    }
+		    setTimeout(checkIfReady,100);
+		}
+    });
 }
-
-
-//Set up the webgazer video feedback.
-var setup = function() {
 	var width = 300;
     var height = 230;
     var topDist = '0px';
     var leftDist = '0px';
+
+//Set up the webgazer video feedback.
+var setup = function() {
+
     //Set up video variable to store the camera feedback
     var video = document.getElementById('webgazerVideoFeed');
 
+
+    console.log(showCamera);
     //Position the camera feedback to the top left corner.
     video.style.display = 'block';
     video.style.position = 'fixed';
@@ -106,6 +123,13 @@ var setup = function() {
     canvas.height = window.innerHeight;
     canvas.style.position = 'fixed';
 */
+    var showCamera;
+    chrome.storage.sync.get('showCamera', function(result) {
+    	var showCamera = result.showCamera;
+		overlay.hidden = !showCamera;
+    	faceOverlay.hidden = !showCamera;
+	    video.style.display = showCamera?'block':'none';
+    });
     var cl = webgazer.getTracker().clm;
 
     //This function draw the face of the user frame.
@@ -118,6 +142,7 @@ var setup = function() {
     }
     drawLoop();
     console.log(width,height);
+    if(appendLoop) stopAppending();
    	appendLoop = setInterval(appendData,100);
 
  }
@@ -130,10 +155,11 @@ var setup = function() {
 function appendData() {
 	console.log('appending');
 	runs++;
-	if(runs >30) {
+	if(runs > 30) {
 		stopAppending();
 		postData();
 		eyeData = [];
+		runs=0;
 	}
 	var prediction = webgazer.getCurrentPrediction();
 	if(prediction) {
@@ -158,7 +184,6 @@ function postData() {
 		method: 'POST',
 		body: JSON.stringify(postMsg),
 	});
-
 
 
 }
