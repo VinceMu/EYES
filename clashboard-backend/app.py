@@ -2,13 +2,14 @@ from pymongo import MongoClient
 from flask import request, jsonify,Flask, send_from_directory,render_template
 from bson.json_util import dumps
 from flask_cors import CORS
-
+from selenium import webdriver
 import ssl
 import json
 
 
 uri = "mongodb+srv://user:123@unihack-dt2qp.mongodb.net/test?authMechanism=SCRAM-SHA-1"
 client = MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
+driver_path = '/Users/vince/UNIHACK/chromedriver'
 
 app = Flask(__name__)
 mydb = client["UNIHACK"]
@@ -18,7 +19,13 @@ CORS(app)
 @app.route("/")
 def dashboard():
     website_str = request.args.get('site')
-    return render_template("index.html",underlay= website_str)
+    driver = webdriver.Chrome(driver_path)
+    driver.get(website_str)
+    screenshot = driver.save_screenshot("static/"+ "webScreenshot"+'.png')
+    print(screenshot)
+    driver.quit()
+
+    return render_template("index.html")
 
 
 @app.route('/getData', methods=['GET'])

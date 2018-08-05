@@ -5,6 +5,7 @@ window.onload = run
 console.log("run");
 
 function run(){
+    
     initialise()
     var url = new URL("http://127.0.0.1:5000/getData")
     websiteParam = getParameterByName("site")
