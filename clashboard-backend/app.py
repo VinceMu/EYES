@@ -12,8 +12,8 @@ client = MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
 
 
 options = Options()
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
+# options.add_argument('--headless')
+# options.add_argument('--disable-gpu')
 driver_path = '/Users/vince/UNIHACK/chromedriver'
 
 
@@ -59,7 +59,6 @@ def insertToMongo():
     }
     mycol.insert_one(insert)
     return "OK"
-
 
 if __name__ == '__main__':
     app.run()

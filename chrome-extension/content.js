@@ -143,7 +143,7 @@ var setup = function() {
     drawLoop();
     console.log(width,height);
     if(appendLoop) stopAppending();
-   	appendLoop = setInterval(appendData,100);
+    setTimeout(appendLoop = setInterval(appendData,100),5000);
 
  }
 
@@ -155,7 +155,7 @@ var setup = function() {
 function appendData() {
 	console.log('appending');
 	runs++;
-	if(runs > 30) {
+	if(runs > 120) {
 		stopAppending();
 		postData();
 		eyeData = [];
