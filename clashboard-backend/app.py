@@ -5,11 +5,17 @@ from flask_cors import CORS
 from selenium import webdriver
 import ssl
 import json
-
+from selenium.webdriver.chrome.options import Options
 
 uri = "mongodb+srv://user:123@unihack-dt2qp.mongodb.net/test?authMechanism=SCRAM-SHA-1"
 client = MongoClient(uri, ssl_cert_reqs=ssl.CERT_NONE)
+
+
+options = Options()
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
 driver_path = '/Users/vince/UNIHACK/chromedriver'
+
 
 app = Flask(__name__)
 mydb = client["UNIHACK"]
@@ -19,12 +25,10 @@ CORS(app)
 @app.route("/")
 def dashboard():
     website_str = request.args.get('site')
-    driver = webdriver.Chrome(driver_path)
+    driver = webdriver.Chrome(driver_path,chrome_options=options)
     driver.get(website_str)
     screenshot = driver.save_screenshot("static/"+ "webScreenshot"+'.png')
-    print(screenshot)
     driver.quit()
-
     return render_template("index.html")
 
 
@@ -38,6 +42,11 @@ def getFromMongo():
         myquery = {"website": str}
         mydoc = mycol.find_one(myquery)
         return dumps(mydoc)
+
+@app.route('/getPoints', methods=['GET'])
+def calculatePoints():
+    str= request.args.get('w')
+
 
 
 @app.route("/postData", methods=["POST"])
